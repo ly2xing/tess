@@ -1,0 +1,19 @@
+@import '../../variables'
+
+.tess-player
+  display: flex
+  flex-direction: column
+  height: 100vh
+  width: 100vw
+  &__controls
+    height: $control-height
+    background-color: $dark-primary
+  &__content
+    flex: 1
+    display: flex
+    position: relative
+    align-items: center
+    background-color: #333
+    &-video
+      flex: 1
+      max-height: 100%

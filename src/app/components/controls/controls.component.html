@@ -1,0 +1,27 @@
+<div class="tess-controls">
+  <input class="tess-controls__file" id="file" type="file" name="datafile" size="40" multiple (change)="onChange($event)">
+  <label for="file" class="icons">
+    <span class="material-icons">videocam</span>
+  </label>
+  <button class="tess-controls__previous icons" (click)="onPrevious()">
+    <span class="material-icons">skip_previous</span>
+  </button>
+  <button class="tess-controls__rewind icons">
+    <span class="material-icons">fast_rewind</span>
+  </button>
+  <button class="tess-controls__play icons" (click)="onPlayClick()">
+    <span class="material-icons">{{isPlaying ? 'pause' : 'play_arrow'}}</span>
+  </button>
+  <button class="tess-controls__fast-forward icons">
+    <span class="material-icons">fast_forward</span>
+  </button>
+  <button class="tess-controls__next icons" (click)="onNext()">
+    <span class="material-icons">skip_next</span>
+  </button>
+  <button class="tess-controls__drawer icons" (click)="onDrawerOpen()">
+    <span class="material-icons">{{isDrawerOpen ? 'close' : 'chevron_left'}}</span>
+  </button>
+  <div class="tess-controls__file-drawer" [class.open]="isDrawerOpen">
+    <app-file-selector [files]="fileTimes" (change)="onFileChange($event)"></app-file-selector>
+  </div>
+</div>

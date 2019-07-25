@@ -1,0 +1,8 @@
+<video
+  #videoElement
+  class="tess-video"
+  [src]="video.src | safe"
+  (loadeddata)="onLoadedData($event)"
+  (ended)="onEnded()"
+>
+</video>

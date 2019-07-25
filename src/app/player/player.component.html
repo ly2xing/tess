@@ -1,0 +1,10 @@
+<div class="tess-player">
+  <div class="tess-player__content">
+    <div class="tess-player__content-video" *ngFor="let video of videoSet?.toArray()">
+      <app-video [video]="video" (complete)="onComplete(video)"></app-video>
+    </div>
+  </div>
+  <div class="tess-player__controls">
+    <app-controls (videoSelected)="onVideoSelected($event)"></app-controls>
+  </div>
+</div>

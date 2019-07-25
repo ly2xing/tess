@@ -1,0 +1,47 @@
+@import '../../../variables'
+
+.tess-controls
+  height: 100%
+  width: 100%
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 0 2rem
+  position: relative
+  &__file
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+  &__drawer
+    .material-icons
+      transform: rotate(90deg)
+  .icons
+    border: $icon-border
+    color: white
+    border-radius: $icon-border-radius
+    background-color: transparent
+    outline: none
+    width: $icon-width
+    height: $icon-height
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 1.125rem
+    cursor: pointer
+  &__file-drawer
+    display: none
+    padding: 1rem
+    width: 12rem
+    min-height: 10rem
+    max-height: 80vh
+    background-color: $dark-primary
+    border-radius: $file-drawer-border-radius
+    position: absolute
+    bottom: 100%
+    right: 0
+    margin: 2rem
+    &.open
+      display: block
