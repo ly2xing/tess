@@ -91,6 +91,9 @@ export class ControlsComponent implements OnInit {
     const nextIndex = currentIndex + 1;
     if (this.fileTimes.length > nextIndex) {
       this.onFileChange(this.fileTimes[nextIndex]);
+    } else {
+      this.isPlaying = false;
+      this.playingFileName = '';
     }
   }
 

@@ -10,6 +10,9 @@ export class FileSelectorComponent {
   @Input()
   public files: string[];
 
+  @Input()
+  public current: string;
+
   @Output()
   public change: EventEmitter<string> = new EventEmitter();
 

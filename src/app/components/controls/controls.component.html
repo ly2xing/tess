@@ -25,6 +25,7 @@
     <span class="material-icons">{{isDrawerOpen ? 'close' : 'chevron_left'}}</span>
   </button>
   <div class="tess-controls__file-drawer" [class.open]="isDrawerOpen">
-    <app-file-selector [files]="fileTimes" (change)="onFileChange($event)"></app-file-selector>
+    <app-file-selector [files]="fileTimes" (change)="onFileChange($event)" [current]="playingFileName">
+    </app-file-selector>
   </div>
 </div>
