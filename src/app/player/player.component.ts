@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { VideoService } from '../services/video.service';
 import { Video } from '../models/video';
 import { VideoSet } from '../models/video-set';
+import { VideoProperties } from '../components/video/video.component';
+import { CameraPosition } from '../enums/CameraPosition.enum';
 
 @Component({
   selector: 'app-player',
@@ -24,6 +26,18 @@ export class PlayerComponent implements OnInit {
       this.videoSet = VideoSet.createFromVideos(videos);
     } else {
       this.videoSet.setToVideos(videos);
+    }
+  }
+
+  public onVideoLoaded(videoProperties: VideoProperties) {
+    if (videoProperties.position === CameraPosition.Center) {
+      this.videoService.updateDuration(videoProperties.duration);
+    }
+  }
+
+  public onVideoUpdated(videoProperties: VideoProperties) {
+    if (videoProperties.position === CameraPosition.Center) {
+      this.videoService.updateTime(videoProperties.currentTime);
     }
   }
 

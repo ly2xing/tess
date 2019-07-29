@@ -18,7 +18,8 @@ export class ControlsComponent implements OnInit {
   public selectedVideos: any[] = [];
 
   public isPlaying: boolean = false;
-  public time: number;
+  public time = 0;
+  public duration = 0;
 
   public isDrawerOpen: boolean = false;
 
@@ -29,7 +30,8 @@ export class ControlsComponent implements OnInit {
 
   ngOnInit() {
     this.videoService.isPlaying.subscribe(isPlaying => this.isPlaying = isPlaying);
-    this.videoService.time.subscribe(time => this.time = time);
+    this.videoService.time.subscribe(time => this.time = Math.floor(time));
+    this.videoService.duration.subscribe(duration => this.duration = Math.floor(duration));
     this.videoService.completed.subscribe(() => this.onNext());
   }
 
@@ -103,5 +105,21 @@ export class ControlsComponent implements OnInit {
 
   public onDrawerOpen() {
     this.isDrawerOpen = !this.isDrawerOpen;
+  }
+
+  public onFastForward() {
+    this.videoService.seekTo(Math.min(this.duration, this.time + 10));
+  }
+
+  public onFastRewind() {
+    this.videoService.seekTo(Math.max(0, this.time - 10));
+  }
+
+  public formatTime(time: number) {
+    return (Math.floor(time / 60)).toString()
+      .padStart(2, '0')
+      + ':' +
+      (Math.floor(time % 60)).toString()
+        .padStart(2, '0');
   }
 }

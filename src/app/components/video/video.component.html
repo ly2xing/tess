@@ -2,6 +2,8 @@
   #videoElement
   class="tess-video"
   [src]="video.src | safe"
+  preload
+  (timeupdate)="onTimeUpdate($event)"
   (loadeddata)="onLoadedData($event)"
   (ended)="onEnded()"
 >
