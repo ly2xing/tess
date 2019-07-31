@@ -2,18 +2,32 @@
 
 .tess-player
   display: flex
-  flex-direction: column
+  flex-direction: row
   height: 100vh
   width: 100vw
+  overflow: hidden
+  @media (min-width: 801px)
+    flex-direction: column
   &__controls
-    height: $control-height
+    width: $control-height
+    height: 100vh
     background-color: $dark-primary
+    @media (min-width: 801px)
+      height: $control-height
+      width: 100vw
   &__content
     flex: 1
     display: flex
+    height: 100vh
+    width: calc(100vw - #{$control-height})
     position: relative
+    flex-direction: column
     align-items: center
     background-color: #333
+    overflow-y: auto
+    @media (min-width: 801px)
+      height: calc(100vh - #{$control-height})
+      width: 100vw
+      flex-direction: row
     &-video
       flex: 1
-      max-height: 100%

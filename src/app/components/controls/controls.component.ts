@@ -30,8 +30,8 @@ export class ControlsComponent implements OnInit {
 
   ngOnInit() {
     this.videoService.isPlaying.subscribe(isPlaying => this.isPlaying = isPlaying);
-    this.videoService.time.subscribe(time => this.time = Math.floor(time));
-    this.videoService.duration.subscribe(duration => this.duration = Math.floor(duration));
+    this.videoService.time.subscribe(time => this.time = time);
+    this.videoService.duration.subscribe(duration => this.duration = duration);
     this.videoService.completed.subscribe(() => this.onNext());
   }
 
@@ -104,6 +104,11 @@ export class ControlsComponent implements OnInit {
     } else {
       this.videoService.pause();
     }
+  }
+
+  public onScrub(event) {
+    const time = event.target.value;
+    this.videoService.seekTo(time);
   }
 
   public onDrawerOpen() {

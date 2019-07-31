@@ -18,8 +18,13 @@
   <button class="tess-controls__next icons" (click)="onNext()">
     <span class="material-icons">skip_next</span>
   </button>
+  <div class="tess-controls__scrubber">
+    <input type="range" step=".0001" [value]="time.toString()" min="0" [max]="duration.toString()" (input)="onScrub($event)" />
+  </div>
   <div class="tess-controls__times">
-    {{formatTime(time)}} / {{formatTime(duration)}}
+    {{formatTime(time)}}
+    <span class="tess-controls__times-divider">/</span>
+    {{formatTime(duration)}}
   </div>
   <button class="tess-controls__drawer icons" (click)="onDrawerOpen()">
     <span class="material-icons">{{isDrawerOpen ? 'close' : 'chevron_left'}}</span>

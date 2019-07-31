@@ -21,14 +21,14 @@ export class VideoService {
 
   public get time() {
     return this.timeSubject.pipe(
-      map(time => Math.floor(time)),
+      map(time => Math.floor(time * 100) / 100),
       distinctUntilChanged()
     );
   }
 
   public get duration() {
     return this.durationSubject.pipe(
-      map(time => Math.floor(time)),
+      map(time => Math.floor(time * 100) / 100),
       distinctUntilChanged()
     );
   }

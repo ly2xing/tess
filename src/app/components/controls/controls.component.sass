@@ -4,13 +4,33 @@
   height: 100%
   width: 100%
   display: flex
+  flex-direction: column
   justify-content: space-between
   align-items: center
-  padding: 0 2rem
+  padding: 2rem 0
   position: relative
+  @media (min-width: 801px)
+    flex-direction: row
+    padding: 0 2rem
   &__times
     color: white
     font-family: sans-serif
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    @media (min-width: 801px)
+      flex-direction: row
+    &-divider
+      overflow: hidden
+      height: 0
+      width: 1rem
+      margin: .25rem
+      border-top: 1px solid white
+      @media (min-width: 801px)
+        height: auto
+        width: auto
+        border-top: none
   &__file
     width: 0.1px
     height: 0.1px
@@ -18,9 +38,6 @@
     overflow: hidden
     position: absolute
     z-index: -1
-  &__drawer
-    .material-icons
-      transform: rotate(90deg)
   .icons
     border: $icon-border
     color: white
@@ -34,6 +51,11 @@
     justify-content: center
     font-size: 1.125rem
     cursor: pointer
+  &__drawer
+    .material-icons
+      transform: rotate(0deg)
+      @media (min-width: 801px)
+        transform: rotate(90deg)
   &__file-drawer
     display: none
     padding: 1rem
@@ -43,8 +65,92 @@
     background-color: $dark-primary
     border-radius: $file-drawer-border-radius
     position: absolute
-    bottom: 100%
-    right: 0
     margin: 2rem
+    right: 100%
+    bottom: 0
+    @media (min-width: 801px)
+      bottom: 100%
+      right: 0
     &.open
       display: block
+  &__scrubber
+    display: none
+    width: 20%
+    @media (min-width: 801px)
+      display: block
+    input
+      &[type=range]
+        width: 100%
+        -webkit-appearance: none
+        background: transparent
+        &::-webkit-slider-thumb
+          -webkit-appearance: none
+        &:focus
+          outline: none
+        &::-ms-track
+          width: 100%
+          cursor: pointer
+          background: transparent
+          border-color: transparent
+          color: transparent
+        &::-webkit-slider-thumb
+          -webkit-appearance: none
+          border: 1px solid white
+          height: 1rem
+          width: .25rem
+          border-radius: 0
+          background: white
+          cursor: pointer
+          margin-top: -.5rem
+        &::-moz-range-thumb
+          border: 1px solid white
+          height: 1rem
+          width: .25rem
+          border-radius: 0
+          background: white
+          cursor: pointer
+        &::-ms-thumb
+          border: 1px solid white
+          height: 1rem
+          width: .25rem
+          border-radius: 0
+          background: white
+          cursor: pointer
+        &::-webkit-slider-runnable-track
+          width: 100%
+          height: .25rem
+          cursor: pointer
+          background: white
+          border-radius: .0625rem
+          border: 1px solid white
+
+        &:focus::-webkit-slider-runnable-track
+          background: white
+
+        &::-moz-range-track
+          width: 100%
+          height: .25rem
+          cursor: pointer
+          background: white
+          border-radius: .0625rem
+          border: 1px solid white
+        &::-ms-track
+          width: 100%
+          height: .5rem
+          cursor: pointer
+          background: transparent
+          border-color: transparent
+          border-width: 1px 0
+          color: transparent
+        &::-ms-fill-lower
+          background: white
+          border: 1px solid white
+          border-radius: .0625rem
+        &:focus::-ms-fill-lower
+          background: white
+        &::-ms-fill-upper
+          background: white
+          border: 1px solid white
+          border-radius: .0625rem
+        &:focus::-ms-fill-upper
+          background: white
