@@ -1,5 +1,17 @@
 <div class="tess-controls">
-  <input class="tess-controls__file" id="file" type="file" name="datafile" size="40" multiple (change)="onChange($event)">
+  <input class="tess-controls__file"
+         id="file"
+         type="file"
+         name="datafile"
+         size="40"
+         multiple
+         webkitdirectory
+         mozdirectory
+         msdirectory
+         odirectory
+         directory
+         (change)="onChange($event)"
+  >
   <label for="file" class="icons">
     <span class="material-icons">videocam</span>
   </label>
