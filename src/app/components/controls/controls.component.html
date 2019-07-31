@@ -38,7 +38,7 @@
     <span class="tess-controls__times-divider">/</span>
     {{formatTime(duration)}}
   </div>
-  <button class="tess-controls__drawer icons" (click)="onDrawerOpen()">
+  <button class="tess-controls__drawer icons" (click)="onDrawerOpen()" [class.open]="isDrawerOpen">
     <span class="material-icons">{{isDrawerOpen ? 'close' : 'chevron_left'}}</span>
   </button>
   <div class="tess-controls__file-drawer" [class.open]="isDrawerOpen">

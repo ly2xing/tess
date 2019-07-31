@@ -52,11 +52,16 @@
     font-size: 1.125rem
     cursor: pointer
   &__drawer
+    transition: all .3s
+    &.icons.open
+      background-color: white
+      color: $dark-primary
     .material-icons
       transform: rotate(0deg)
       @media (min-width: 801px)
         transform: rotate(90deg)
   &__file-drawer
+    transition: all .3s
     display: none
     padding: 1rem
     width: 14rem
