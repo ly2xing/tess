@@ -1,4 +1,7 @@
 <div class="tess-file-selector">
+  <div class="tess-file-selector__empty" *ngIf="!files || files.length === 0">
+    <span>Please select a folder</span>
+  </div>
   <span
     class="tess-file-selector__file"
     *ngFor="let file of files"
