@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { SafePipe } from './pipes/safe.pipe';
 import { CommonModule } from '@angular/common';
 import { FileSelectorComponent } from './components/file-selector/file-selector.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { FileSelectorComponent } from './components/file-selector/file-selector.
     BrowserModule,
     CommonModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
