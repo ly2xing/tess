@@ -1,11 +1,10 @@
 import { Video } from './video';
+import { CameraPosition } from '../enums/CameraPosition.enum';
 
 export class VideoSet {
-  public 1: Video;
-  public 2: Video;
-  public 3: Video;
 
   public array: Video[];
+  public dynamicVideoSet: Video[][];
 
   public validKeys = [];
 
@@ -14,6 +13,33 @@ export class VideoSet {
       this.array = this.validKeys.sort().map(key => this[key]);
     }
     return this.array;
+  }
+
+  public toDynamic(): Video[][] {
+    if (!this.dynamicVideoSet) {
+      this.dynamicVideoSet = [];
+      [
+        [CameraPosition.LeftCenter, CameraPosition.Left],
+        [CameraPosition.Center, CameraPosition.Rear],
+        [CameraPosition.RightCenter, CameraPosition.Right]
+      ].map(positions => {
+        const videoColumn = this.getVideoColumnOf(positions);
+        if (videoColumn.length > 0) {
+          this.dynamicVideoSet.push(videoColumn);
+        }
+      });
+    }
+    return this.dynamicVideoSet;
+  }
+
+  public getVideoColumnOf(positions: CameraPosition[]): Video[] {
+    const ret = [];
+    for (const pos of positions) {
+      if (this.validKeys.indexOf(pos) > -1) {
+        ret.push(this[pos]);
+      }
+    }
+    return ret;
   }
 
   public setToVideos(videos: Video[]) {

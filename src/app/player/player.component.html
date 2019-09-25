@@ -1,15 +1,33 @@
 <div class="tess-player">
-  <div class="tess-player__content">
-    <div class="tess-player__content-video" *ngFor="let video of videoSet?.toArray()">
-      <app-video
-        [video]="video"
-        (loaded)="onVideoLoaded($event)"
-        (update)="onVideoUpdated($event)"
-        (complete)="onComplete(video)">
-      </app-video>
+  <div class="tess-player__content grid" *ngIf="displayMode === DisplayMode.Grid">
+    <div
+      class="tess-player__content-video full-height"
+      *ngFor="let video of videoSet?.toArray()"
+      style="{{'grid-area' + ': ' + CameraPosition[video.cameraPosition]}}"
+    >
+      <template [ngTemplateOutlet]="videoTemplate" [ngTemplateOutletContext]="{video: video}"></template>
+    </div>
+  </div>
+  <div class="tess-player__content dynamic" *ngIf="displayMode === DisplayMode.Dynamic">
+    <div
+      class="tess-player__content-column"
+      *ngFor="let videoColumn of videoSet?.toDynamic()"
+    >
+      <div class="tess-player__content-video" *ngFor="let video of videoColumn">
+        <template [ngTemplateOutlet]="videoTemplate" [ngTemplateOutletContext]="{video: video}"></template>
+      </div>
     </div>
   </div>
   <div class="tess-player__controls">
     <app-controls (videoSelected)="onVideoSelected($event)"></app-controls>
   </div>
 </div>
+
+<ng-template #videoTemplate let-video="video">
+  <app-video
+    [video]="video"
+    (loaded)="onVideoLoaded($event)"
+    (update)="onVideoUpdated($event)"
+    (complete)="onComplete(video)">
+  </app-video>
+</ng-template>

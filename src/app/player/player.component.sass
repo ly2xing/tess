@@ -29,5 +29,20 @@
       height: calc(100vh - #{$control-height})
       width: 100vw
       flex-direction: row
-    &-video
+      &.grid
+        display: grid
+        grid-template-areas: 'Left Center Right' 'LeftCenter Rear RightCenter'
+      &.dynamic
+        display: flex
+        flex-direction: row
+        align-items: stretch
+    &-column
       flex: 1
+      display: flex
+      flex-direction: column
+      align-items: stretch
+      justify-content: center
+    &-video
+      &.full-height
+        flex: 1
+        height: 100%

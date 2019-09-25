@@ -4,6 +4,7 @@ import { Video } from '../models/video';
 import { VideoSet } from '../models/video-set';
 import { VideoProperties } from '../components/video/video.component';
 import { CameraPosition } from '../enums/CameraPosition.enum';
+import { DisplayMode } from '../enums/DisplayMode.enum';
 
 @Component({
   selector: 'app-player',
@@ -14,6 +15,9 @@ export class PlayerComponent implements OnInit {
 
   public videoSet: VideoSet;
   public videoCompleted = {};
+  public displayMode = DisplayMode.Dynamic;
+  public CameraPosition = CameraPosition;
+  public DisplayMode = DisplayMode;
 
   constructor(private videoService: VideoService) { }
 
@@ -47,5 +51,4 @@ export class PlayerComponent implements OnInit {
       this.videoService.complete();
     }
   }
-
 }
