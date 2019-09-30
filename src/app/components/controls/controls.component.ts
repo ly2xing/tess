@@ -71,6 +71,8 @@ export class ControlsComponent implements OnInit {
         video.cameraPosition = CameraPosition.Left;
       } else if (files[i].name.lastIndexOf('right_repeater') > -1) {
         video.cameraPosition = CameraPosition.Right;
+      } else if (files[i].name.lastIndexOf('back') > -1) {
+        video.cameraPosition = CameraPosition.Rear;
       }
       this.selectedVideos.push(video);
     }
