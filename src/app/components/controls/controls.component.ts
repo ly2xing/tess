@@ -46,7 +46,7 @@ export class ControlsComponent implements OnInit {
     this.selectedVideos = [];
     this.videoUrls = {};
 
-    for (let i = 0; i < this.files.length; i++) {c
+    for (let i = 0; i < this.files.length; i++) {
       this.videoUrls[this.files[i].name] = URL.createObjectURL(this.files[i]);
       const timeStamp = this.getTimeStamp(this.files[i]);
       if (this.fileTimes.indexOf(timeStamp) < 0) {
