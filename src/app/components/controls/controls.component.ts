@@ -20,6 +20,7 @@ export class ControlsComponent implements OnInit {
   public isPlaying: boolean = false;
   public time = 0;
   public duration = 0;
+  public useNativeFileApi = false;
 
   public isDrawerOpen: boolean = false;
 
@@ -33,15 +34,19 @@ export class ControlsComponent implements OnInit {
     this.videoService.time.subscribe(time => this.time = time);
     this.videoService.duration.subscribe(duration => this.duration = duration);
     this.videoService.completed.subscribe(() => this.onNext());
+    if ('chooseFileSystemEntries' in window) {
+      this.useNativeFileApi = true;
+    }
   }
 
   public onChange(event) {
     this.files = event.target.files;
+    this.files.sort((a, b) => (a.name < b.name) ? -1 : 1);
     this.fileTimes = [];
     this.selectedVideos = [];
     this.videoUrls = {};
 
-    for (let i = 0; i < this.files.length; i++) {
+    for (let i = 0; i < this.files.length; i++) {c
       this.videoUrls[this.files[i].name] = URL.createObjectURL(this.files[i]);
       const timeStamp = this.getTimeStamp(this.files[i]);
       if (this.fileTimes.indexOf(timeStamp) < 0) {
@@ -52,6 +57,21 @@ export class ControlsComponent implements OnInit {
 
   private getTimeStamp(file) {
     return file.name.slice(0, 19);
+  }
+
+  public async onNativeFileClick() {
+    const handle = await (window as any).chooseFileSystemEntries({
+      accepts: [{ mimeTypes: ['video/*']}],
+      type: 'openDirectory'
+    });
+    const entries = await handle.getEntries();
+    const event = {target: {files: []}};
+    for await (const entry of entries) {
+      const kind = entry.isFile ? 'File' : 'Directory';
+      const file = await entry.getFile();
+      event.target.files.push(file);
+    }
+    this.onChange(event);
   }
 
   public onFileChange(fileName: string) {

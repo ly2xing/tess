@@ -11,10 +11,14 @@
          odirectory
          directory
          (change)="onChange($event)"
+         *ngIf="!useNativeFileApi"
   >
-  <label for="file" class="icons">
+  <label for="file" class="icons" *ngIf="!useNativeFileApi">
     <span class="material-icons">videocam</span>
   </label>
+  <button class="tess-controls__native-file icons" *ngIf="useNativeFileApi" (click)="onNativeFileClick()">
+    <span class="material-icons">videocam</span>
+  </button>
   <button class="tess-controls__previous icons" (click)="onPrevious()">
     <span class="material-icons">skip_previous</span>
   </button>

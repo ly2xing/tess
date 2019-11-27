@@ -50,7 +50,6 @@ export class VideoSet {
 
   public static createFromVideos(videos: Video[]) {
     const set = new VideoSet();
-    console.log(videos);
     for (let video of videos) {
       set[video.cameraPosition] = video;
       set.validKeys.push(video.cameraPosition);
