@@ -40,7 +40,7 @@ export class ControlsComponent implements OnInit {
   }
 
   public onChange(event) {
-    this.files = event.target.files;
+    this.files = Array.prototype.slice.call(event.target.files);
     this.files.sort((a, b) => (a.name < b.name) ? -1 : 1);
     this.fileTimes = [];
     this.selectedVideos = [];
