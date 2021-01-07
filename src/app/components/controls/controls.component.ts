@@ -12,6 +12,7 @@ export class ControlsComponent implements OnInit {
 
   public videoUrls = {};
   public files: any[];
+  public eventJson: any;
   public fileTimes: string[] = [];
   public playingFileName: string;
 
@@ -22,7 +23,7 @@ export class ControlsComponent implements OnInit {
   public duration = 0;
   public useNativeFileApi = false;
 
-  public isDrawerOpen: boolean = false;
+  public isDrawerOpen = false;
 
   @Output()
   public videoSelected: EventEmitter<Video[]> = new EventEmitter();
@@ -41,6 +42,7 @@ export class ControlsComponent implements OnInit {
 
   public onChange(event) {
     this.files = Array.prototype.slice.call(event.target.files);
+    this.eventJson = this.files.filter(a => a.name === 'event.json');
     this.files.sort((a, b) => (a.name < b.name) ? -1 : 1);
     this.fileTimes = [];
     this.selectedVideos = [];
