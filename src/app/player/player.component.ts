@@ -24,12 +24,12 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onVideoSelected(videos: Video[]) {
+  public onVideoSelected(videoSet: VideoSet) {
     this.videoCompleted = {};
     if (!this.videoSet) {
-      this.videoSet = VideoSet.createFromVideos(videos);
+      this.videoSet = videoSet;
     } else {
-      this.videoSet.setToVideos(videos);
+      this.videoSet.setTo(videoSet);
     }
   }
 

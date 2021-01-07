@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { VideoService } from '../../services/video.service';
 import { Video } from '../../models/video';
 import { CameraPosition } from '../../enums/CameraPosition.enum';
+import { VideoSet } from '../../models/video-set';
+import { getTimestamp } from '../../../helpers/timestamp';
 
 @Component({
   selector: 'app-controls',
@@ -26,7 +28,7 @@ export class ControlsComponent implements OnInit {
   public isDrawerOpen = false;
 
   @Output()
-  public videoSelected: EventEmitter<Video[]> = new EventEmitter();
+  public videoSelected: EventEmitter<VideoSet> = new EventEmitter();
 
   constructor(private videoService: VideoService) { }
 
@@ -40,9 +42,10 @@ export class ControlsComponent implements OnInit {
     }
   }
 
-  public onChange(event) {
+  public async onChange(event) {
     this.files = Array.prototype.slice.call(event.target.files);
-    this.eventJson = this.files.filter(a => a.name === 'event.json');
+    const eventJsonFile = this.files.find(a => a.name === 'event.json');
+    this.eventJson = await this.readEventJson(eventJsonFile);
     this.files.sort((a, b) => (a.name < b.name) ? -1 : 1);
     this.fileTimes = [];
     this.selectedVideos = [];
@@ -50,14 +53,33 @@ export class ControlsComponent implements OnInit {
 
     for (let i = 0; i < this.files.length; i++) {
       this.videoUrls[this.files[i].name] = URL.createObjectURL(this.files[i]);
-      const timeStamp = this.getTimeStamp(this.files[i]);
+      const timeStamp = this.getTimeStampString(this.files[i]);
       if (this.fileTimes.indexOf(timeStamp) < 0) {
         this.fileTimes.push(timeStamp);
       }
     }
   }
 
-  private getTimeStamp(file) {
+  private async readEventJson(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.onloadend = (e) => {
+        let result;
+        try {
+          result = JSON.parse(e.target.result as string);
+        } catch (e) {
+          console.warn('event.json contains invalid JSON:', e.target.result);
+        }
+        finally {
+          resolve(result);
+        }
+      };
+      fileReader.onerror = reject;
+      fileReader.readAsText(file);
+    });
+  }
+
+  private getTimeStampString(file) {
     return file.name.slice(0, 19);
   }
 
@@ -99,7 +121,9 @@ export class ControlsComponent implements OnInit {
       this.selectedVideos.push(video);
     }
     this.playingFileName = fileName;
-    this.videoSelected.emit(this.selectedVideos);
+    const timestamp = getTimestamp(this.getTimeStampString(files[0]), 'YYYY-MM-DD_HH-mm-ss');
+    const videoSet = VideoSet.createFromVideos(this.selectedVideos, timestamp, this.eventJson);
+    this.videoSelected.emit(videoSet);
   }
 
   public onPrevious() {

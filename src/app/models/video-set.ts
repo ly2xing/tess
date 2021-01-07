@@ -5,8 +5,21 @@ export class VideoSet {
 
   public array: Video[];
   public dynamicVideoSet: Video[][];
+  public eventJson: any;
+  public timestamp: any;
 
   public validKeys = [];
+
+  public static createFromVideos(videos: Video[], timestamp, eventJson?) {
+    const set = new VideoSet();
+    set.eventJson = eventJson;
+    set.timestamp = timestamp;
+    for (const video of videos) {
+      set[video.cameraPosition] = video;
+      set.validKeys.push(video.cameraPosition);
+    }
+    return set;
+  }
 
   public toArray() {
     if (!this.array) {
@@ -42,18 +55,11 @@ export class VideoSet {
     return ret;
   }
 
-  public setToVideos(videos: Video[]) {
-    for (let video of videos) {
+  public setTo(videos: VideoSet) {
+    this.eventJson = videos.eventJson;
+    this.timestamp = videos.timestamp;
+    for (const video of videos.array) {
       this[video.cameraPosition].src = video.src;
     }
-  }
-
-  public static createFromVideos(videos: Video[]) {
-    const set = new VideoSet();
-    for (let video of videos) {
-      set[video.cameraPosition] = video;
-      set.validKeys.push(video.cameraPosition);
-    }
-    return set;
   }
 }
