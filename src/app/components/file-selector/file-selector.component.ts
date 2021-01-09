@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { getTimestamp } from '../../../helpers/timestamp';
+import { eventJsonTimestampFormat, fileNameTimeStampFormat } from '../../constants';
 
 @Component({
   selector: 'app-file-selector',
@@ -11,6 +13,9 @@ export class FileSelectorComponent {
   public files: string[];
 
   @Input()
+  public timestamp: any;
+
+  @Input()
   public current: string;
 
   @Output()
@@ -18,6 +23,13 @@ export class FileSelectorComponent {
 
   public onClick(file: string) {
     this.change.emit(file);
+  }
+
+  public doesFileContainEvent(file, nextFile, timestamp) {
+    const fileTimestamp = getTimestamp(file, fileNameTimeStampFormat);
+    const nextFileTimestamp = getTimestamp(nextFile, fileNameTimeStampFormat);
+    const parsedTimestamp = getTimestamp(timestamp, eventJsonTimestampFormat);
+    return parsedTimestamp.isBetween(fileTimestamp, nextFileTimestamp);
   }
 }
 

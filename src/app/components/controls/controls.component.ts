@@ -4,6 +4,11 @@ import { Video } from '../../models/video';
 import { CameraPosition } from '../../enums/CameraPosition.enum';
 import { VideoSet } from '../../models/video-set';
 import { getTimestamp } from '../../../helpers/timestamp';
+import { fileNameTimeStampFormat } from '../../constants';
+
+import * as duration from 'dayjs/plugin/duration';
+import * as dayjs from 'dayjs';
+dayjs.extend(duration);
 
 @Component({
   selector: 'app-controls',
@@ -17,6 +22,7 @@ export class ControlsComponent implements OnInit {
   public eventJson: any;
   public fileTimes: string[] = [];
   public playingFileName: string;
+  public eventTimestamp: any;
 
   public selectedVideos: any[] = [];
 
@@ -121,8 +127,9 @@ export class ControlsComponent implements OnInit {
       this.selectedVideos.push(video);
     }
     this.playingFileName = fileName;
-    const timestamp = getTimestamp(this.getTimeStampString(files[0]), 'YYYY-MM-DD_HH-mm-ss');
+    const timestamp = getTimestamp(this.getTimeStampString(files[0]), fileNameTimeStampFormat);
     const videoSet = VideoSet.createFromVideos(this.selectedVideos, timestamp, this.eventJson);
+    this.eventTimestamp = dayjs(this.eventJson.timestamp);
     this.videoSelected.emit(videoSet);
   }
 
@@ -177,5 +184,25 @@ export class ControlsComponent implements OnInit {
       + ':' +
       (Math.floor(time % 60)).toString()
         .padStart(2, '0');
+  }
+
+  public shouldShowEventIndicator() {
+    const eventTime = this.getEventTimeInSeconds();
+    return this.playingFileName && this.eventTimestamp && eventTime > 0 && eventTime < this.duration;
+  }
+
+  private getEventTimeInSeconds() {
+    if (!this.playingFileName || !this.eventTimestamp) {
+      return -1;
+    }
+    const timestamp = getTimestamp(this.playingFileName, fileNameTimeStampFormat);
+    console.log(timestamp.format(), this.eventTimestamp.format(), dayjs.duration(this.eventTimestamp.diff(timestamp)).asSeconds());
+    return dayjs.duration(this.eventTimestamp.diff(timestamp)).asSeconds();
+  }
+
+  public getEventIndicatorPosition() {
+    const secondsIntoVideo = this.getEventTimeInSeconds();
+    const percentage = secondsIntoVideo / this.duration * 100;
+    return percentage + '%';
   }
 }

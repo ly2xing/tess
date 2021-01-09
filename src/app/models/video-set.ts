@@ -58,7 +58,7 @@ export class VideoSet {
   public setTo(videos: VideoSet) {
     this.eventJson = videos.eventJson;
     this.timestamp = videos.timestamp;
-    for (const video of videos.array) {
+    for (const video of videos.toArray()) {
       this[video.cameraPosition].src = video.src;
     }
   }

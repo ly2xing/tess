@@ -35,7 +35,10 @@
     <span class="material-icons">skip_next</span>
   </button>
   <div class="tess-controls__scrubber">
-    <input type="range" step=".0001" [value]="time.toString()" min="0" [max]="duration.toString()" (input)="onScrub($event)" />
+    <input type="range" step=".0001" [value]="time.toString()"
+           min="0" [max]="duration.toString()" (input)="onScrub($event)"
+    />
+    <span *ngIf="shouldShowEventIndicator()" class="tess-controls__scrubber-event" [style.left]="getEventIndicatorPosition()"></span>
   </div>
   <div class="tess-controls__times">
     {{formatTime(time)}}
@@ -46,7 +49,7 @@
     <span class="material-icons">{{isDrawerOpen ? 'close' : 'chevron_left'}}</span>
   </button>
   <div class="tess-controls__file-drawer" [class.open]="isDrawerOpen">
-    <app-file-selector [files]="fileTimes" (change)="onFileChange($event)" [current]="playingFileName">
+    <app-file-selector [files]="fileTimes" [timestamp]="eventJson?.timestamp" (change)="onFileChange($event)" [current]="playingFileName">
     </app-file-selector>
   </div>
 </div>

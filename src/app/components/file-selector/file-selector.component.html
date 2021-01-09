@@ -4,8 +4,9 @@
   </div>
   <span
     class="tess-file-selector__file"
-    *ngFor="let file of files"
+    *ngFor="let file of files; let i = index"
     [class.current]="file === current"
+    [class.event]="doesFileContainEvent(file, files[i+1], timestamp)"
     (click)="onClick(file)">
     {{file}}
   </span>

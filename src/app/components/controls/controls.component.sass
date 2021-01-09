@@ -82,8 +82,18 @@
   &__scrubber
     display: none
     width: 20%
+    position: relative
     @media (min-width: 801px)
       display: block
+    &-event
+      position: absolute
+      width: .5rem
+      height: .5rem
+      background: red
+      border-radius: 5px
+      display: block
+      top: .425rem
+      pointer-events: none
     input
       &[type=range]
         width: 100%
